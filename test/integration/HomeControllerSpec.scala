@@ -12,31 +12,28 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
    {
       "firstName": "Test",
       "lastName": "Test",
-      "passportSN": "Test",
+      "passportSn": "Test",
       "phone": "Test",
-      "email": "Test",
-      "login": "Test",
-      "password": "Test"
+      "email": "Test"
     }""")
   val BadPatient: JsValue = Json.parse(
     """
    {
       "firstName": "Test",
       "lastName": "Test",
-      "passportSN": "Test",
-      "phone": "Test",
-      "email": "Test",
-      "login": "Test"
+      "passportSn": "Test",
+      "email": "Test"
     }""")
 
   "Create patient" should {
-    "return OK" in {
+    "return should be OK" in {
       val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.createUser().url)
         .withJsonBody(Patient)
       ).get
 
       status(sendRequest) mustBe OK
     }
+
     "return BAD_REQUEST" in {
       val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.createUser().url)
         .withJsonBody(BadPatient)
@@ -48,15 +45,7 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   "Login page" should {
     "return OK" in {
-      val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.adminLogin().url)).get
-
-      status(sendRequest) mustBe OK
-    }
-  }
-
-  "Registration page" should {
-    "return OK" in {
-      val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.addPerson().url)).get
+      val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.adminLogin("uz").url)).get
 
       status(sendRequest) mustBe OK
     }
@@ -64,7 +53,7 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   "Index page" should {
     "return OK" in {
-      val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.index().url)).get
+      val sendRequest = route(app, FakeRequest(POST, controllers.routes.HomeController.index("uz").url)).get
 
       status(sendRequest) mustBe OK
     }
